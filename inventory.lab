@@ -1,0 +1,10 @@
+# ## Build nodes running kernel-build-containers
+[all]
+fsalab0 ansible_host=10.21.234.240 ansible_user=ubuntu ansible_python_interpreter=/usr/bin/python3
+
+
+# ## configure a bastion host if your build-s are not directly reachable
+# bastion ansible_host=x.x.x.x ansible_user=some_user
+
+[build_nodes]
+ fsalab0

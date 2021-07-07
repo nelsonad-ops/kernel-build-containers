@@ -1,0 +1,21 @@
+---
+- name: Let's evaluate build performance on your nodes
+  hosts: build_nodes
+  remote_user: ubuntu
+  tasks:
+     - name: Make host directories
+       file:
+         path: '/home/ubuntu/linux/build_out'
+         state: directory
+     - name: Make host directories
+       file:
+         path: '/home/ubuntu/linux/build_out/{{ansible_hostname}}'
+         state: directory
+     - name: Run make_linux ARM on build nodes
+       script: make_linux.py -a i386 -k /mnt/fb/linux/Kconfig -s /mnt/fb/linux -o /mnt/fb/build_out/{{ansible_hostname}} -c gcc-8 -- -j5
+       register: results
+       args:
+         executable: python3
+         chdir: /home/ubuntu/kernel-build-containers
+     - debug:
+        var: results.stdout
